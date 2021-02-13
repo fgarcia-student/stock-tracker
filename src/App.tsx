@@ -1,8 +1,21 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { useDispatch } from 'react-redux';
+import { useMapState } from './state/hooks';
+import { getComapnyProfiles } from './state/entities/entitiesSelectors';
+import { FetchCompanyProfileCreator } from './state/entities/entitiesActions';
 
 function App() {
+  const dispatch = useDispatch();
+  const companyProfiles = useMapState(getComapnyProfiles);
+
+  React.useEffect(() => {
+    dispatch(FetchCompanyProfileCreator("AAPL"));
+  }, [dispatch]);
+
+  console.log(companyProfiles);
+
   return (
     <div className="App">
       <header className="App-header">

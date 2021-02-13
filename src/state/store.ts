@@ -1,7 +1,15 @@
 import { applyMiddleware, createStore } from "redux";
 import { loadingMiddleware } from "./loading/loadingMiddleware";
 import { rootReducer } from "./rootReducer";
+import { createEpicMiddleware } from "redux-observable";
+import { rootEpic } from './rootEpic';
+import { SetTokenCreator } from './session/sessionActions';
 
-const middlewareEnhancer = applyMiddleware(loadingMiddleware);
+const epicMiddleware = createEpicMiddleware();
+
+const middlewareEnhancer = applyMiddleware(loadingMiddleware, epicMiddleware);
 
 export const store = createStore(rootReducer, middlewareEnhancer);
+epicMiddleware.run(rootEpic as any);
+
+store.dispatch(SetTokenCreator(process.env.REACT_APP_API_KEY));
