@@ -1,6 +1,9 @@
-# Getting Started with Create React App
+## Getting started with stock-tracker
+Add a .env file to the directory where you cloned the project
+eg. /stock-tracker/.env
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+add the following environment variables:
+- REACT_APP_API_KEY = API key from your https://finnhub.io/ account
 
 ## Available Scripts
 
