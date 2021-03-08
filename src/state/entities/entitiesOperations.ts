@@ -7,8 +7,9 @@ import { ajaxEpicCreator } from '../utils';
 
 const FetchCompanyProfileEpic = ajaxEpicCreator<FetchCompanyProfile>({
   triggerActions: [EntitiesTypes.FETCH_COMPANY_PROFILE],
-  urlBuilder: (action) => ({ method: "GET", url: `api/v1/stock/profile2?symbol=${action.symbol}` }),
+  requestBuilder: (action) => ({ method: "GET", url: `api/v1/stock/profile2?symbol=${action.symbol}` }),
   onSuccess: (data: CompanyProfileResponse) => [FetchCompanyProfileSuccessCreator(CompanyProfile.fromContract(data))],
+  cancellationActionTypes: [EntitiesTypes.FETCH_COMPANY_PROFILE_CANCEL],
 });
 
 export const entitiesEpics = combineEpics(

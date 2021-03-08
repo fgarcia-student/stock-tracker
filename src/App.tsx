@@ -4,14 +4,17 @@ import './App.css';
 import { useDispatch } from 'react-redux';
 import { useMapState } from './state/hooks';
 import { getComapnyProfiles } from './state/entities/entitiesSelectors';
-import { FetchCompanyProfileCreator } from './state/entities/entitiesActions';
+import { FetchCompanyProfileCreator, FetchCompanyProfileCancelCreator } from './state/entities/entitiesActions';
 
 function App() {
   const dispatch = useDispatch();
   const companyProfiles = useMapState(getComapnyProfiles);
 
+  
   React.useEffect(() => {
     dispatch(FetchCompanyProfileCreator("AAPL"));
+    // cancel requests
+    dispatch(FetchCompanyProfileCancelCreator());
   }, [dispatch]);
 
   console.log(companyProfiles);

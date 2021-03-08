@@ -7,7 +7,7 @@ import { withLatestFrom, mergeMap, catchError, takeUntil } from 'rxjs/operators'
 
 interface EpicCreatorParams<A extends AnyAction, State> {
   triggerActions: string[];
-  urlBuilder: (action: A, state: State) => ({
+  requestBuilder: (action: A, state: State) => ({
     method: "GET" | "DELETE",
     url: string,
     headers?: Object,
@@ -35,8 +35,8 @@ const getAjaxMethod = <A extends AnyAction>(
   dependencies: typeof epicDependencies,
   epicCreatorParams: EpicCreatorParams<A, RootState>,
 ) => {
-  const urlPayload = epicCreatorParams.urlBuilder(action, state);
-  const url = new URL(`${window.location.href}${urlPayload.url}`);
+  const urlPayload = epicCreatorParams.requestBuilder(action, state);
+  const url = new URL(`${window.location.origin}/${urlPayload.url}`);
   url.searchParams.append("token", state.session.token ?? "");
   switch (urlPayload.method) {
     case "GET":
@@ -61,7 +61,7 @@ export const ajaxEpicCreator = <A extends AnyAction>(
     return getAjaxMethod(action, state, dependencies$, params).pipe(
       mergeMap((res) => params.onSuccess(res.response, action, state)),
       catchError((err: AjaxError) => params.onFailure?.(err) ?? []),
-      takeUntil(action$.pipe(ofType(params.cancellationActionTypes))),
+      takeUntil(action$.pipe(ofType(...(params.cancellationActionTypes ?? [])))),
     );
   }),
 );

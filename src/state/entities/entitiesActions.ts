@@ -1,9 +1,14 @@
 import { EntitiesTypes } from './entitiesTypes';
 import CompanyProfile from '../../models/CompanyProfile';
+
 export const FetchCompanyProfileCreator = (symbol: string) => ({
   symbol,
   type: EntitiesTypes.FETCH_COMPANY_PROFILE as const,
 });
+
+export const FetchCompanyProfileCancelCreator = () => ({
+  type: EntitiesTypes.FETCH_COMPANY_PROFILE_CANCEL as const,
+})
 
 export const FetchCompanyProfileFailCreator = () => ({
   type: EntitiesTypes.FETCH_COMPANY_PROFILE_FAIL as const,
