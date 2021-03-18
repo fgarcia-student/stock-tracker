@@ -1,6 +1,7 @@
+import { SessionTypes } from './sessionTypes';
 export const SetTokenCreator = (token?: string) => ({
   token,
-  type: "@session/SET_TOKEN"
+  type: SessionTypes.SET_TOKEN as const,
 });
 
 export type SetToken = ReturnType<typeof SetTokenCreator>;

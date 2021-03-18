@@ -1,6 +1,7 @@
 import { Record, RecordOf } from 'immutable';
 import { Reducer } from "redux"
 import { SessionActions } from "./sessionActions";
+import { SessionTypes } from './sessionTypes';
 
 interface ISessionState {
   token?: string;
@@ -16,7 +17,7 @@ export const sessionReducer: Reducer<SessionState, SessionActions> = (
   action,
 ) => {
   switch (action.type) {
-    case "@session/SET_TOKEN":
+    case SessionTypes.SET_TOKEN:
       return state.set("token", action.token ?? "");
     default:
       return state;
