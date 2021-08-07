@@ -1,4 +1,4 @@
-import { LoadingTypes } from './loadingTypes';
+import {LoadingTypes} from './loadingTypes';
 
 export const SetModuleLoadingStatusCreator = (module: string, isLoading: boolean) => ({
   module,

@@ -1,5 +1,5 @@
-import { Map, Record } from "immutable"
-import { Reducer } from "redux"
+import {Map, Record} from "immutable"
+import {Reducer} from "redux"
 
 export interface LoadingState {
   modules: Map<string, boolean>;
@@ -7,7 +7,7 @@ export interface LoadingState {
 
 const LoadingRecord = Record<LoadingState>({
   modules: Map(),
-}); 
+});
 
 export const loadingReducer: Reducer<LoadingState> = (
   state = LoadingRecord(),

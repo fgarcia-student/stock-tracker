@@ -1,9 +1,9 @@
-import { applyMiddleware, compose, createStore } from "redux";
-import { loadingMiddleware } from "./loading/loadingMiddleware";
-import { rootReducer } from "./rootReducer";
-import { createEpicMiddleware } from "redux-observable";
-import { rootEpic } from './rootEpic';
-import { SetTokenCreator } from './session/sessionActions';
+import {applyMiddleware, compose, createStore} from "redux";
+import {loadingMiddleware} from "./loading/loadingMiddleware";
+import {rootReducer} from "./rootReducer";
+import {createEpicMiddleware} from "redux-observable";
+import {rootEpic} from './rootEpic';
+import {SetTokenCreator} from './session/sessionActions';
 
 const epicMiddleware = createEpicMiddleware();
 

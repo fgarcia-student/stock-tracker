@@ -1,11 +1,11 @@
-import { AnyAction } from "redux";
-import { Observable, ObservableInput } from "rxjs";
-import { AjaxError, ajax } from 'rxjs/ajax';
-import { RootState } from './rootReducer';
-import { StateObservable, ofType } from 'redux-observable';
-import { withLatestFrom, mergeMap, catchError, takeUntil } from 'rxjs/operators';
+import {AnyAction} from "redux";
+import {Observable, ObservableInput} from "rxjs";
+import {AjaxError, ajax} from 'rxjs/ajax';
+import {RootState} from './rootReducer';
+import {StateObservable, ofType} from 'redux-observable';
+import {withLatestFrom, mergeMap, catchError, takeUntil} from 'rxjs/operators';
 
-type Headers = {[key: string]: string};
+type Headers = { [key: string]: string };
 
 interface EpicCreatorParams<A extends AnyAction, State> {
   triggerActions: string[];
