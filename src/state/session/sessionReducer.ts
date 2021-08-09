@@ -1,7 +1,7 @@
-import { Record, RecordOf } from 'immutable';
-import { Reducer } from "redux"
-import { SessionActions } from "./sessionActions";
-import { SessionTypes } from './sessionTypes';
+import {Record, RecordOf} from 'immutable';
+import {Reducer} from "redux"
+import {SessionActions} from "./sessionActions";
+import {SessionTypes} from './sessionTypes';
 
 interface ISessionState {
   token?: string;
@@ -10,7 +10,7 @@ interface ISessionState {
 export type SessionState = RecordOf<ISessionState>;
 const SessionRecord = Record<ISessionState>({
   token: "",
-}); 
+});
 
 export const sessionReducer: Reducer<SessionState, SessionActions> = (
   state = SessionRecord(),

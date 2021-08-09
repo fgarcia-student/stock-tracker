@@ -1,4 +1,4 @@
-import { EntitiesTypes } from './entitiesTypes';
+import {EntitiesTypes} from './entitiesTypes';
 import CompanyProfile from '../../models/CompanyProfile';
 
 export const FetchCompanyProfileCreator = (symbol: string) => ({
@@ -28,4 +28,4 @@ export type EntitiesActions = (
   FetchCompanyProfile |
   FetchCompanyProfileFail |
   FetchCompanyProfileSuccess
-)
+  )

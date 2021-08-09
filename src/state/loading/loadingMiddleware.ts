@@ -1,7 +1,6 @@
-import { Action, Dispatch, Middleware } from "redux";
-import { RootState } from "../rootReducer";
-import { SetModuleLoadingStatusCreator } from "./loadingActions";
-
+import {Action, Dispatch, Middleware} from "redux";
+import {RootState} from "../rootReducer";
+import {SetModuleLoadingStatusCreator} from "./loadingActions";
 
 
 export const loadingMiddleware: Middleware<Dispatch, RootState> = (api) => (next) => (action: Action<string>) => {

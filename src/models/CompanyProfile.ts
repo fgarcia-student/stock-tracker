@@ -1,4 +1,4 @@
-import { Record } from "immutable";
+import {Record} from "immutable";
 
 export interface CompanyProfileResponse {
   country: string;
