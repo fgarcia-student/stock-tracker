@@ -12,4 +12,7 @@ const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ as
 export const store = createStore(rootReducer, composeEnhancers(middlewareEnhancer));
 epicMiddleware.run(rootEpic as any);
 
-store.dispatch(SetTokenCreator(process.env.REACT_APP_API_KEY));
+if (process.env.NODE_ENV === "development") {
+  // during development get the token from local .env
+  store.dispatch(SetTokenCreator(process.env.REACT_APP_API_KEY));
+}
