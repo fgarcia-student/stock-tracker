@@ -1,4 +1,4 @@
-import {Record, Map, RecordOf} from "immutable"
+import {Record, Map, List, RecordOf} from "immutable"
 import {Reducer} from "redux"
 import CompanyProfile from '../../models/CompanyProfile';
 import LiveTradeData from '../../models/LiveTradeData';
@@ -7,11 +7,10 @@ import {EntitiesActions} from "./entitiesActions";
 import {EntitiesTypes} from "./entitiesTypes";
 
 type StockSymbol = string;
-type Timestamp = string;
 
 interface IEntitiesState {
   companies: Map<StockSymbol, CompanyProfile>;
-  liveTradeData: Map<StockSymbol, Map<Timestamp, LiveTradeData>>;
+  liveTradeData: Map<StockSymbol, List<LiveTradeData>>;
   stockLookup: Map<StockSymbol, StockLookup>;
 }
 

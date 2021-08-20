@@ -7,9 +7,9 @@ import {withLatestFrom, mergeMap, catchError, takeUntil} from 'rxjs/operators';
 
 type Headers = { [key: string]: string };
 
-interface EpicCreatorParams<A extends AnyAction, State> {
+interface EpicCreatorParams<A extends AnyAction, State, Dependencies> {
   triggerActions: string[];
-  requestBuilder: (action: A, state: State) => ({
+  requestBuilder: (action: A, state: State, dependencies: Dependencies) => ({
     method: "GET" | "DELETE",
     url: string,
     headers?: Headers,
@@ -19,8 +19,8 @@ interface EpicCreatorParams<A extends AnyAction, State> {
     body?: any,
     headers?: Headers,
   });
-  onSuccess: (value: any, action: A, state: State) => ObservableInput<AnyAction>;
-  onFailure?: (err: AjaxError) => ObservableInput<AnyAction>;
+  onSuccess: (value: any, action: A, state: State, dependencies: Dependencies) => ObservableInput<AnyAction>;
+  onFailure?: (err: AjaxError, action: A, state: State, dependencies: Dependencies) => ObservableInput<AnyAction>;
   cancellationActionTypes?: string[];
 }
 
@@ -37,9 +37,13 @@ const getAjaxMethod = <A extends AnyAction>(
   action: A,
   state: RootState,
   dependencies: typeof epicDependencies,
-  epicCreatorParams: EpicCreatorParams<A, RootState>,
+  epicCreatorParams: EpicCreatorParams<A, RootState, typeof epicDependencies>,
 ) => {
-  const urlPayload = epicCreatorParams.requestBuilder(action, state);
+  const urlPayload = epicCreatorParams.requestBuilder(action, state, dependencies);
+  /**
+   * TODO: Think about pulling this utility out into a separate package?
+   * How would this look like in a generic, configurable way?
+   */
   const url = appendToken(urlPayload.url, state.session.token);
   switch (urlPayload.method) {
     case "GET":
@@ -54,7 +58,7 @@ const getAjaxMethod = <A extends AnyAction>(
 }
 
 export const ajaxEpicCreator = <A extends AnyAction>(
-  params: EpicCreatorParams<A, RootState>,
+  params: EpicCreatorParams<A, RootState, typeof epicDependencies>,
 ) => (
   action$: Observable<A>,
   state$: StateObservable<RootState>,
@@ -64,8 +68,8 @@ export const ajaxEpicCreator = <A extends AnyAction>(
   withLatestFrom(state$),
   mergeMap(([action, state]) => {
     return getAjaxMethod(action, state, dependencies$, params).pipe(
-      mergeMap((res) => params.onSuccess(res.response, action, state)),
-      catchError((err: AjaxError) => params.onFailure?.(err) ?? []),
+      mergeMap((res) => params.onSuccess(res.response, action, state, dependencies$)),
+      catchError((err: AjaxError) => params.onFailure?.(err, action, state, dependencies$) ?? []),
       takeUntil(action$.pipe(ofType(...(params.cancellationActionTypes ?? [])))),
     );
   }),
