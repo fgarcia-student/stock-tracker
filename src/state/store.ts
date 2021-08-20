@@ -6,8 +6,11 @@ import {rootEpic} from './rootEpic';
 import {SetTokenCreator} from './session/sessionActions';
 
 const epicMiddleware = createEpicMiddleware();
-
-const middlewareEnhancer = applyMiddleware(loadingMiddleware, epicMiddleware);
+const middleware = [
+  loadingMiddleware,
+  epicMiddleware
+]
+const middlewareEnhancer = applyMiddleware(...middleware);
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ as typeof compose || compose;
 export const store = createStore(rootReducer, composeEnhancers(middlewareEnhancer));
 epicMiddleware.run(rootEpic as any);

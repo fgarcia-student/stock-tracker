@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 import {useMapState} from './state/hooks';
 import {getComapnyProfiles} from './state/entities/entitiesSelectors';
-import {FetchCompanyProfileCreator, FetchCompanyProfileCancelCreator} from './state/entities/entitiesActions';
+import {FetchCompanyProfileCreator} from './state/entities/entitiesActions';
 import {HomePage} from './pages/HomePage';
 
 function App() {
@@ -12,7 +12,6 @@ function App() {
 
   React.useEffect(() => {
     dispatch(FetchCompanyProfileCreator("AAPL"));
-    // cancel requests
   }, [dispatch]);
 
   console.log(companyProfiles);
